@@ -1,5 +1,7 @@
 # cuentas-cobrar-ws
 
+## Web services for the RECEIVABLES system (3th system)
+
 ## List of available web services
 
 * Cobrador
