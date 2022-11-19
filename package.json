@@ -1,0 +1,30 @@
+{
+  "name": "cuentas-cobrar-ws",
+  "version": "1.0.0",
+  "description": "Web services for the RECEIVABLES system (3th system)",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WilmerAlquinga/cuentas-cobrar-ws.git"
+  },
+  "author": "wsalquinga",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WilmerAlquinga/cuentas-cobrar-ws/issues"
+  },
+  "homepage": "https://github.com/WilmerAlquinga/cuentas-cobrar-ws#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "oracledb": "^5.5.0",
+    "sequelize": "^6.25.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
