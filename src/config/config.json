@@ -1,23 +1,29 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "cuentas_cobrar_dev",
+    "password": 123456,
+    "database": "cuentas_cobrar_dev",
+    "host": "localhost",
+    "dialect": "oracle",
+    "port": 1521,
+    "connectString": "localhost:1521/orcl"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "cuentas_cobrar_dev",
+    "password": 123456,
+    "database": "cuentas_cobrar_test",
+    "host": "localhost",
+    "dialect": "oracle",
+    "port": 1521,
+    "connectString": "localhost:1521/orcl"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "cuentas_cobrar_dev",
+    "password": 123456,
+    "database": "cuentas_cobrar_production",
+    "host": "localhost",
+    "dialect": "oracle",
+    "port": 1521,
+    "connectString": "localhost:1521/orcl"
   }
 }
