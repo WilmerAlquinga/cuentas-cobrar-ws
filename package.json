@@ -2,9 +2,9 @@
   "name": "cuentas-cobrar-ws",
   "version": "1.0.0",
   "description": "Web services for the RECEIVABLES system (3th system)",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
