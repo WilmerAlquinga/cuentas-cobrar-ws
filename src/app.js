@@ -3,6 +3,7 @@ const logger = require("morgan");
 const { json, urlencoded} = require("body-parser");
 const { createServer} = require("http");
 const app = express();
+const cors = require("cors");
 app.use(logger("dev"));
 
 app.use(json());
@@ -17,3 +18,13 @@ app.set("port", port);
 const server = createServer(app);
 server.listen(port);
 module.exports = app;
+
+// imports
+
+// settings
+
+// midleware
+
+// routes
+
+// run
