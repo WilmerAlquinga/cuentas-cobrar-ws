@@ -18,16 +18,20 @@ config = {
 };
 
 async function Open(sql, binds, autoCommit) {
-  console.log(sql);
-  let cnn = await oracledb.getConnection({
-    user: "cuentas_cobrar_dev",
-    password: "123456",
-    connectString: "localhost/orcl",
-  });
-  let result = await cnn.execute(`select * from cobrador`);
-  console.log(result);
+  try {
+    let connection = await oracledb.getConnection(config);
+    let result = await connection.execute(sql, binds, { autoCommit });
+  } catch (error) {
+    return err;
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (error) {}
+    }
+  }
+
   cnn.release();
-  console.log(result);
   return result;
 }
 

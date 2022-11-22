@@ -1,27 +1,19 @@
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
+const express = require("express");
+const logger = require("morgan");
+const { json, urlencoded } = require("body-parser");
+const { createServer } = require("http");
 const app = express();
+app.use(logger("dev"));
 
-//imports
-const cobradorRoutes = require('./routes/cobrador.routes');
-
-//settings
-app.set('port', 8000);
-let corsOptions = {
-  origin: ["*"],
-};
-
-//middlewares
-app.use(cors(corsOptions));
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-//routes
-app.use(cobradorRoutes);
-
-//run
-app.listen(app.get('port'), () => {
-    console.log('Server on Port 8000')
-})
+app.use(json());
+app.use(urlencoded({ extended: false }));
+app.get("*", (req, res) =>
+res.status(200).send({
+    message: "Welcome to the RECEIVABLES system.",
+  })
+);
+const port = parseInt(process.env.PORT, 10) || 8000;
+app.set("port", port);
+const server = createServer(app);
+server.listen(port);
+module.exports = app;
