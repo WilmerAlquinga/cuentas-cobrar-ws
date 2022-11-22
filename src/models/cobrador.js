@@ -9,21 +9,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Cobrador.init({
-    id: {
+    ID_COBRADOR: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    cedula: {
+    CEDULA: {
       allowNull: false,
       type: DataTypes.INTEGER
     },
-    nombre: {
+    NOMBRE: {
       allowNull: false,
       type: DataTypes.STRING
     },
-    direccion: {
+    DIRECCION: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    DIRECCION2: {
       allowNull: false,
       type: DataTypes.STRING
     }
@@ -31,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     timestamps: false,
     freezeTableName: true,
-    tableName: 'cobrador',
+    tableName: 'COBRADOR',
     modelName: 'Cobrador',
   });
   return Cobrador;

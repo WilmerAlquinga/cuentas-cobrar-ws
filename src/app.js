@@ -8,7 +8,13 @@ app.use(logger("dev"));
 
 app.use(json());
 app.use(urlencoded({ extended: false }));
-oracledb.initOracleClient({libDir: 'C:\\Users\\Usuario\\Documents\\Arquitectura\\Proyecto\\instantclient_21_7'});
+try {
+  oracledb.initOracleClient({libDir: 'C:\\Users\\Usuario\\Documents\\Arquitectura\\Proyecto\\instantclient_21_7'});
+} catch (err) {
+  console.error('Error on init oracle client');
+  console.error(err);
+  process.exit(1);
+}
 app.get("*", (req, res) =>
 res.status(200).send({
     message: "Welcome to the RECEIVABLES system.",
