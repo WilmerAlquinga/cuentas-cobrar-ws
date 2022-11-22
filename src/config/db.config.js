@@ -19,8 +19,8 @@ config = {
 
 async function Open(sql, binds, autoCommit) {
   try {
-    let connection = await oracledb.getConnection(config);
-    let result = await connection.execute(sql, binds, { autoCommit });
+    connection = await oracledb.getConnection(config);
+    result = await connection.execute(sql, binds, { autoCommit });
   } catch (error) {
     return err;
   } finally {
@@ -35,9 +35,6 @@ async function Open(sql, binds, autoCommit) {
 
     return result;
   }
-
-  cnn.release();
-  return result;
 }
 
 exports.Open = Open;
