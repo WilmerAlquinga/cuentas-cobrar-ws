@@ -27,8 +27,13 @@ async function Open(sql, binds, autoCommit) {
     if (connection) {
       try {
         await connection.close();
-      } catch (error) {}
+        console.log('close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
     }
+
+    return result;
   }
 
   cnn.release();
