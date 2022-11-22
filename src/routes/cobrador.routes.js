@@ -5,13 +5,14 @@ const BD = require('../config/db.config');
 //READ
 router.get('/getCobradores', async (req, res) => {
     console.log('In getCobradores');
-    sql = "select * from COBRADOR";
+    sql = "select * from cobrador";
 
     let result = await BD.Open(sql, [], false);
-    console.log(result);
-    Cobradores = [];
+    // console.log(result);
+    cobradores = [];
 
     result.rows.map(user => {
+        console.log('usuario: ' + user[0]);
         let userSchema = {
             "ID_COBRADOR": user[0],
             "CEDULA": user[1],
@@ -19,11 +20,11 @@ router.get('/getCobradores', async (req, res) => {
             "DIRECCION": user[3]
         }
 
-        Cobradores.push(userSchema);
+        cobradores.push(userSchema);
     })
-    console.log(Cobradores);
+    console.log(cobradores);
 
-    res.json(Cobradores);
+    res.json(cobradores);
 })
 
 module.exports = router;
