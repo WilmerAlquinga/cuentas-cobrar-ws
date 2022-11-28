@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
 //routes
 require("./routes/cobrador.routes")(app);
 require("./routes/forma-pago.routes")(app);
+require("./routes/cuentas-cobrar.routes")(app);
 
 //run
 app.listen(app.get('port'), () => {

@@ -24,7 +24,7 @@ async function Open(sql, binds, autoCommit) {
     result = await connection.execute(sql, binds, { autoCommit });
     console.log(result);
   } catch (error) {
-    return err;
+    return console.error(error);
   } finally {
     if (connection) {
       try {
