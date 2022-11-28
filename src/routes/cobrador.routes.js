@@ -4,6 +4,10 @@ module.exports = (app) => {
 
     // Methods
     router.get("/findAll", cobrador.findAll);
+    router.post("/create", cobrador.create);
+    router.get("/findById/:id_cobrador", cobrador.findById);
+    router.put("/update", cobrador.update);
+    router.delete("/delete/:code", cobrador.delete);
 
     // General path
     app.use("/apiV1/cobrador", router);

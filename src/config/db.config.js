@@ -18,9 +18,11 @@ config = {
 };
 
 async function Open(sql, binds, autoCommit) {
+  let result;
   try {
     connection = await oracledb.getConnection(config);
     result = await connection.execute(sql, binds, { autoCommit });
+    console.log(result);
   } catch (error) {
     return err;
   } finally {
