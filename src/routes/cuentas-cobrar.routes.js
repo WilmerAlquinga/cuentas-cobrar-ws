@@ -9,6 +9,10 @@ module.exports = (app) => {
     router.put("/update", cobros.update);
     router.delete("/delete/:code", cobros.delete);
 
+    // Methods details
+    router.post("/detail/create", cobros.createDetail);
+    router.get("/detail/findAll/:id_cobro", cobros.findDetailsById);
+
     // General path
     app.use("/apiV1/cuentas-cobrar", router);
 }

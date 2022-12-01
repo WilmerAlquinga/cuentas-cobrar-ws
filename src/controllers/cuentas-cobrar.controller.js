@@ -11,8 +11,9 @@ const table_name = 'cobrador';
 exports.findAll = async (req, res) => {
     const sql = `select * from cobro`;
     let result = await BD.Open(sql, [], false);
-    let cobros = [];
-    result.rows.map(cobro => {
+    let cobros = await Promise.all(result.rows.map(async cobro => {
+        const id_cobro = cobro[0];
+        console.log(id_cobro);
         let cobroEntity = {
             "id_cobro": cobro[0],
             "numero_factura": cobro[1],
@@ -21,10 +22,33 @@ exports.findAll = async (req, res) => {
             "valor_pendiente": cobro[4],
             "fecha": cobro[5],
             "cliente": cobro[6],
-            "estado": cobro[7]
+            "estado": cobro[7],
+            "detalles": []
         }
-        cobros.push(cobroEntity);
-    })
+        const sql_det = `select * from cobro_detalle where id_cobro=:id_cobro`;
+        const result_det = await BD.Open(sql_det, [id_cobro], false);
+        let detalles = [];
+        await Promise.all(await result_det.rows.map(cobro => {
+                let detalleCobroEntity = {
+                    "id_cobro_detalle": cobro[0],
+                    "id_cobro": cobro[1],
+                    "id_forma_de_pago": cobro[2],
+                    "id_cobrador": cobro[3],
+                    "fecha": cobro[4],
+                    "forma_de_pago": cobro[5],
+                    "pago": cobro[6],
+                    "valor": cobro[7],
+                    "cobrador": cobro[8]
+                }
+                detalles.push(detalleCobroEntity);
+            })
+        )
+        cobroEntity.detalles = detalles;
+        return cobroEntity;
+        // console.log(cobro);
+        // cobros.push(cobroEntity);
+    }))
+    console.log(cobros);
     res.json(cobros);
 };
 
@@ -44,8 +68,27 @@ exports.findById = async (req, res) => {
             "valor_pendiente": result.rows[0][4],
             "fecha": result.rows[0][5],
             "cliente": result.rows[0][6],
-            "estado": result.rows[0][7]
+            "estado": result.rows[0][7],
+            "detalles": []
         };
+        const sql_det = `select * from cobro_detalle where id_cobro=:id_cobro`;
+        const result_det = await BD.Open(sql_det, [id_cobro], false);
+        let detalles = [];
+        result_det.rows.map(cobro => {
+            let detalleCobroEntity = {
+                "id_cobro_detalle": cobro[0],
+                "id_cobro": cobro[1],
+                "id_forma_de_pago": cobro[2],
+                "id_cobrador": cobro[3],
+                "fecha": cobro[4],
+                "forma_de_pago": cobro[5],
+                "pago": cobro[6],
+                "valor": cobro[7],
+                "estado": cobro[8]
+            }
+            detalles.push(detalleCobroEntity);
+        });
+        cobro.detalles = detalles;
     } else {
         console.log("No existe el registro con id " + id_cobro);
     }
@@ -90,6 +133,53 @@ exports.create = async (req, res) => {
     }
 
     res.status(200).json(cobro);
+};
+
+// Create Detail
+exports.createDetail = async (req, res) => {
+    const {id_cobro, valor_cobrado, valor_pendiente, estado, detail} = req.body;
+    const {id_forma_de_pago, id_cobrador, fecha, forma_de_pago, pago, valor, cobrador} = detail;
+    const fecha_cobro = new Date(fecha);
+    const sql_header = `update cobro set valor_cobrado=:valor_cobrado, valor_pendiente=:valor_pendiente, estado=:estado where id_cobro=:id_cobro`;
+    let result_header = await BD.Open(sql_header, [valor_cobrado, valor_pendiente, estado, id_cobro], true);
+    console.log(result_header);
+    const sql_det = `insert into cobro_detalle(id_cobro,id_forma_de_pago,id_cobrador,fecha,forma_de_pago,pago,valor,cobrador) values (:id_cobro,:id_forma_de_pago,:id_cobrador,:fecha_cobro,:forma_de_pago,:pago,:valor,:cobrador)`;
+    let result_detail = await BD.Open(sql_det, [id_cobro, id_forma_de_pago, id_cobrador, fecha_cobro, forma_de_pago, pago, valor, cobrador], true);
+    console.log(result_detail);
+    const cobro = {
+        "id_cobro": id_cobro,
+        "id_forma_de_pago": id_forma_de_pago,
+        "id_cobrador": id_cobrador,
+        "fecha": fecha_cobro,
+        "forma_de_pago": forma_de_pago,
+        "pago": pago,
+        "valor": valor,
+        "cobrador": cobrador
+    };
+    res.status(200).json(cobro);
+};
+
+// Find All Details By Cobro id
+exports.findDetailsById = async (req, res) => {
+    const {id_cobro} = req.params;
+    const sql_det = `select * from cobro_detalle where id_cobro=:id_cobro`;
+    const result_det = await BD.Open(sql_det, [id_cobro], false);
+    let detalles = [];
+    result_det.rows.map(cobro => {
+        let detalleCobroEntity = {
+            "id_cobro_detalle": cobro[0],
+            "id_cobro": cobro[1],
+            "id_forma_de_pago": cobro[2],
+            "id_cobrador": cobro[3],
+            "fecha": cobro[4],
+            "forma_de_pago": cobro[5],
+            "pago": cobro[6],
+            "valor": cobro[7],
+            "estado": cobro[8]
+        }
+        detalles.push(detalleCobroEntity);
+    });
+    res.status(200).json(detalles);
 };
 
 // Update

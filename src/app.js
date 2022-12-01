@@ -9,7 +9,7 @@ const cobradorRoutes = require('./routes/cobrador.routes');
 //settings
 app.set('port', 8000);
 let corsOptions = {
-  origin: ["*"],
+  origin: '*'
 };
 
 //middlewares
